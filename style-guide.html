@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>למדי להתלבש כמו מגזין אופנה — MAYO DE BAIN</title>
+    <meta name="description" content="מדריך הסגנון של MAYO DE BAIN מגלה לך איך לשלב צעיפים ואביזרים פרימיום לסטיילינג מושלם. השראה אופנתית ברמת Vogue ו-Dior — ישירות אל הארון שלך. גלי עכשיו.">
+    <meta name="keywords" content="MAYO DE BAIN, מדריך סגנון אופנה, סטיילינג צעיפים, fashion ecommerce website, לוק יוקרתי נשי">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Zappy Analytics -->
+<script>
+(function() {
+  'use strict';
+  
+  // Configuration
+  var config = {
+    websiteId: '2e38b43a-df45-4d2f-8f08-e1ae07b84f1f',
+    apiUrl: 'https://api.zappy5.com/api/analytics/track',
+    sessionDuration: 30 * 60 * 1000, // 30 minutes
+    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
+    trackPageViews: true,
+    trackClicks: true,
+    trackFormSubmissions: true
+  };
+  
+  // Generate or retrieve persistent visitor ID (30 days)
+  function getVisitorId() {
+    var visitorKey = 'zappy_visitor_' + config.websiteId;
+    var visitor = null;
+    
+    try {
+      visitor = localStorage.getItem(visitorKey);
+      if (visitor) {
+        var visitorData = JSON.parse(visitor);
+        var now = Date.now();
+        
+        // Check if visitor ID is still valid (30 days)
+        if (now - visitorData.created < config.visitorDuration) {
+          // Update last seen timestamp
+          visitorData.lastSeen = now;
+          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
+          return visitorData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: LocalStorage not available');
+    }
+    
+    // Generate new visitor ID
+    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      localStorage.setItem(visitorKey, JSON.stringify({
+        id: newVisitorId,
+        created: Date.now(),
+        lastSeen: Date.now()
+      }));
+    } catch (e) {
+      // Continue without local storage
+    }
+    
+    return newVisitorId;
+  }
+  
+  // Generate or retrieve session ID (30 minutes)
+  function getSessionId() {
+    var sessionKey = 'zappy_session_' + config.websiteId;
+    var session = null;
+    
+    try {
+      session = sessionStorage.getItem(sessionKey);
+      if (session) {
+        var sessionData = JSON.parse(session);
+        var now = Date.now();
+        
+        // Check if session is still valid
+        if (now - sessionData.timestamp < config.sessionDuration) {
+          // Update timestamp
+          sessionData.timestamp = now;
+          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
+          return sessionData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: SessionStorage not available');
+    }
+    
+    // Generate new session ID
+    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      sessionStorage.setItem(sessionKey, JSON.stringify({
+        id: newSessionId,
+        timestamp: Date.now()
+      }));
+    } catch (e) {
+      // Continue without session storage
+    }
+    
+    return newSessionId;
+  }
+  
+  var visitorId = getVisitorId();
+  var sessionId = getSessionId();
+  
+  // Track an event
+  function trackEvent(eventType, data) {
+    data = data || {};
+    
+    var eventData = {
+      website_id: config.websiteId,
+      event_type: eventType,
+      page_path: window.location.pathname,
+      referrer: document.referrer || 'direct',
+      visitor_id: visitorId,
+      session_id: sessionId,
+      metadata: data
+    };
+    
+    // Use sendBeacon if available (better for page unload events)
+    if (navigator.sendBeacon) {
+      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
+      navigator.sendBeacon(config.apiUrl, blob);
+    } else {
+      // Fallback to fetch
+      fetch(config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventData),
+        keepalive: true
+      }).catch(function(error) {
+        console.warn('Zappy Analytics: Failed to track event', error);
+      });
+    }
+  }
+  
+  // Track page view
+  if (config.trackPageViews) {
+    trackEvent('pageview', {
+      title: document.title,
+      url: window.location.href
+    });
+  }
+  
+  // Track clicks on important elements
+  if (config.trackClicks) {
+    document.addEventListener('click', function(e) {
+      var target = e.target;
+      
+      // Track button clicks (counted as actions)
+      if (target.tagName === 'BUTTON' || target.closest('button')) {
+        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
+        trackEvent('click', {
+          element: 'button',
+          text: button.textContent.trim().substring(0, 100),
+          id: button.id || null,
+          class: button.className || null
+        });
+      }
+      
+      // Track link clicks (navigation - not counted as actions)
+      else if (target.tagName === 'A' || target.closest('a')) {
+        var link = target.tagName === 'A' ? target : target.closest('a');
+        trackEvent('navigation', {
+          element: 'link',
+          text: link.textContent.trim().substring(0, 100),
+          href: link.href,
+          external: link.hostname !== window.location.hostname
+        });
+      }
+    }, true);
+  }
+  
+  // Track form submissions
+  if (config.trackFormSubmissions) {
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      
+      trackEvent('form_submit', {
+        form_id: form.id || null,
+        form_name: form.name || null,
+        form_action: form.action || null,
+        form_method: form.method || 'GET'
+      });
+    }, true);
+  }
+  
+  // Track time on page (send on page unload)
+  var pageLoadTime = Date.now();
+  
+  window.addEventListener('beforeunload', function() {
+    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
+    
+    trackEvent('page_unload', {
+      time_on_page: timeOnPage,
+      page_path: window.location.pathname
+    });
+  });
+  
+  // Expose tracking function globally for custom events
+  window.zappyAnalytics = {
+    track: trackEvent,
+    getVisitorId: function() { return visitorId; },
+    getSessionId: function() { return sessionId; }
+  };
+  
+})();
+</script>
+<!-- End Zappy Analytics -->
+    <meta property="og:title" content="למדי להתלבש כמו מגזין אופנה — MAYO DE BAIN">
+    <meta property="og:description" content="מדריך הסגנון של MAYO DE BAIN מגלה לך איך לשלב צעיפים ואביזרים פרימיום לסטיילינג מושלם. השראה אופנתית ברמת Vogue ו-Dior — ישירות אל הארון שלך. גלי עכשיו.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="למדי להתלבש כמו מגזין אופנה — MAYO DE BAIN">
+    <meta name="twitter:description" content="מדריך הסגנון של MAYO DE BAIN מגלה לך איך לשלב צעיפים ואביזרים פרימיום לסטיילינג מושלם. השראה אופנתית ברמת Vogue ו-Dior — ישירות אל הארון שלך. גלי עכשיו.">
+    <meta property="og:type" content="website">
+  <meta property="og:locale" content="he_IL">
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .skip-link { position: absolute; top: 0; left: 0; transform: translateY(-200%); padding: 12px 18px; background: var(--bg-dark, #1a1a1a); color: var(--text-light, #fff); font-weight: 600; border-radius: 0 0 8px 0; z-index: 10000; }
+    .skip-link:focus { transform: none; outline: 2px solid var(--ring, #fff); outline-offset: 2px; }
+    :focus-visible { outline: 2px solid var(--ring, currentColor); outline-offset: 3px; }
+  </style>
+
+
+  
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css">
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
+    <!-- Mickidum Accessibility Toolbar -->
+    <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+
+    <style id="zappy-dropdown-submenu-styles">
+      /* ========== DESKTOP DROPDOWN SUBMENU STYLES ========== */
+      /* Base styles for dropdown submenus - parent must be positioned */
+      .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { position: relative; }
+      /* Submenu base - hidden by default */
+      .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { display: block !important; position: absolute !important; top: 100%; left: 0; min-width: 220px; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 8px 0; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 1000; list-style: none; pointer-events: none; }
+      /* CRITICAL: Desktop hover styles to show dropdown */
+      .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Submenu item styling */
+      .sub-menu li { list-style: none; margin: 0; padding: 0; }
+      .sub-menu a { display: block !important; padding: 10px 16px !important; color: var(--text-dark, #333) !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu .zappy-nav-child > a { padding-left: 28px !important; font-size: 0.9em !important; opacity: 0.85 !important; }
+      [dir="rtl"] .sub-menu .zappy-nav-child > a, html[lang="he"] .sub-menu .zappy-nav-child > a, html[lang="ar"] .sub-menu .zappy-nav-child > a { padding-left: 10px !important; padding-right: 28px !important; }
+      .sub-menu .zappy-nav-parent > a { font-weight: 600 !important; }
+      .sub-menu a:hover { background-color: #f5f5f5; }
+      /* RTL (Hebrew/Arabic) dropdown positioning */
+      [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
+      /* Hide empty dropdown menus (exclude catalog sub-menus that use <a> children instead of <li>) */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))):not(:has(> a)), .sub-menu:not(:has(li)):not(:has(> a)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Desktop: show submenu on Menu Group hover */
+      li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Menu Group title styling */
+      .nav-menu > li > .menu-group-title, #navMenu > li > .menu-group-title { display: inline-block; padding: 0.5rem 1rem; cursor: default; user-select: none; }
+      
+      /* ========== MOBILE SUBMENU STYLES ========== */
+      @media (max-width: 768px) {
+        .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
+        .navbar .sub-menu.mobile-expanded, .nav-menu .sub-menu.mobile-expanded, #navMenu .sub-menu.mobile-expanded { max-height: none !important; overflow-y: visible !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
+        /* Disable hover behavior on mobile */
+        .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+        .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; position: relative !important; min-height: 44px !important; }
+        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; min-width: 0 !important; }
+        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; min-width: 0 !important; padding: 0 !important; line-height: inherit !important; }
+        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu, .navbar li:has(.sub-menu) > .sub-menu, #navMenu li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
+        .nav-menu li:has(.sub-menu) > a [class*="chevron"], .nav-menu li:has(.sub-menu) > a [class*="arrow"], .nav-menu li:has(.sub-menu) > a .fa-chevron-down, .nav-menu li:has(.sub-menu) > a .fa-angle-down, nav li:has(.sub-menu) > a [class*="chevron"], nav li:has(.sub-menu) > a [class*="arrow"], #navMenu li:has(.sub-menu) > a [class*="chevron"], #navMenu li:has(.sub-menu) > a [class*="arrow"] { display: none !important; visibility: hidden !important; }
+        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: auto !important; background: transparent !important; border: none !important; cursor: pointer !important; color: var(--text-dark) !important; position: static !important; flex-shrink: 0 !important; align-self: stretch !important; z-index: 2 !important; padding: 0 !important; margin: 0 !important; }
+        .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
+        .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
+        .sub-menu a { padding: 10px 0 !important; display: block !important; color: var(--text-dark) !important; white-space: normal !important; }
+        .sub-menu .zappy-nav-child > a { padding-left: 28px !important; font-size: 0.9em !important; opacity: 0.85 !important; }
+        [dir="rtl"] .sub-menu .zappy-nav-child > a, html[lang="he"] .sub-menu .zappy-nav-child > a, html[lang="ar"] .sub-menu .zappy-nav-child > a { padding-left: 0 !important; padding-right: 28px !important; }
+        .sub-menu .zappy-nav-parent > a { font-weight: 600 !important; }
+        .nav-menu.active, #navMenu.active { max-width: 100vw !important; overflow-x: hidden !important; box-sizing: border-box !important; }
+        .navbar .sub-menu li a, nav.navbar .sub-menu li a, .zappy-products-dropdown .sub-menu a { color: var(--text-dark) !important; }
+      }
+      @media (min-width: 769px) { .mobile-submenu-toggle { display: none !important; } }
+    </style>
+
+    <style id="zappy-widget-visibility">
+      html[dir="rtl"] .whatsapp-float { right: 20px !important; left: auto !important; }
+      html[dir="ltr"] .whatsapp-float, html:not([dir]) .whatsapp-float { left: 20px !important; right: auto !important; }
+      html[dir="rtl"] #mic-access-tool-general-button, html[dir="rtl"] .mic-access-tool-general-button,
+      html[dir="rtl"] #mic-init-access-tool .mic-access-tool-general-button,
+      html[dir="rtl"] #mic-init-access-tool #mic-access-tool-general-button,
+      html[dir="rtl"] ._access-icon { left: 20px !important; right: auto !important; }
+      html[dir="ltr"] #mic-access-tool-general-button, html[dir="ltr"] .mic-access-tool-general-button,
+      html[dir="ltr"] #mic-init-access-tool .mic-access-tool-general-button,
+      html[dir="ltr"] #mic-init-access-tool #mic-access-tool-general-button,
+      html[dir="ltr"] ._access-icon,
+      html:not([dir]) #mic-access-tool-general-button, html:not([dir]) .mic-access-tool-general-button,
+      html:not([dir]) #mic-init-access-tool .mic-access-tool-general-button,
+      html:not([dir]) #mic-init-access-tool #mic-access-tool-general-button,
+      html:not([dir]) ._access-icon { right: 20px !important; left: auto !important; }
+      @media (max-width: 768px) { .whatsapp-float { display: flex !important; } }
+      @media (min-width: 769px) { .whatsapp-float { display: flex !important; } }
+      @media (max-width: 768px) {
+        #mic-access-tool-general-button, .mic-access-tool-general-button,
+        #mic-init-access-tool .mic-access-tool-general-button, #mic-init-access-tool #mic-access-tool-general-button,
+        ._access-icon { display: flex !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; }
+        #mic-access-tool-box.opened-mic-access-tool, .mic-access-tool-box.opened-mic-access-tool,
+        #mic-init-access-tool #mic-access-tool-box.opened-mic-access-tool {
+          visibility: visible !important; opacity: 1 !important; pointer-events: auto !important;
+        }
+      }
+      @media (min-width: 769px) {
+        #mic-access-tool-general-button, .mic-access-tool-general-button,
+        #mic-init-access-tool .mic-access-tool-general-button, #mic-init-access-tool #mic-access-tool-general-button,
+        ._access-icon { display: flex !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; }
+        #mic-access-tool-box.opened-mic-access-tool, .mic-access-tool-box.opened-mic-access-tool,
+        #mic-init-access-tool #mic-access-tool-box.opened-mic-access-tool {
+          visibility: visible !important; opacity: 1 !important; pointer-events: auto !important;
+        }
+      }
+    </style>
+</head>
+<body>
+
+
+    <div class="mobile-search-panel" id="mobile-search-panel">
+      <div class="search-wrapper">
+        <input type="text" id="mobile-search-input" placeholder="חיפוש מוצרים..." autocomplete="off">
+        <button class="search-submit" id="mobile-search-submit" title="חיפוש">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg>
+        </button>
+        <button class="close-search" id="close-mobile-search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <div class="search-results" id="mobile-search-results"></div>
+    </div>
+  
+<script>window.ZAPPY_WEBSITE_ID = "2e38b43a-df45-4d2f-8f08-e1ae07b84f1f";window.ZAPPY_API_BASE = "https://api.zappy5.com";</script><a class="skip-link" href="#main">דלג לתוכן הראשי</a>
+  <nav class="navbar" dir="rtl">
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+    <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display: none;">
+      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+
+  <button class="phone-header-btn" data-phone="" aria-label="Call">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+    </svg>
+  </button>
+
+  <div class="nav-container">
+    <div class="nav-right-group"><div class="nav-brand">
+      <a href="/" class="logo-link"><img class="logo" src="/assets/site-------------image-1.webp" alt="MAYO DE BAIN"></a>
+    </div><ul class="nav-menu" id="navMenu">
+
+    <li class="menu-item-has-children zappy-products-dropdown">
+      <a href="/products">
+        מוצרים
+        <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 9l6 6 6-6"></path>
+        </svg>
+      </a>
+      <ul class="sub-menu" id="zappy-nav-category-links">
+        <li><a href="/products">כל המוצרים</a></li>
+        <!-- Categories will be loaded dynamically -->
+      </ul>
+    </li>
+  <li><a href="/">בית</a></li><li><a href="/brand-story">סיפור המותג</a></li><li><a href="/style-guide">מדריך סגנון</a></li><li><a href="/community">קהילה</a></li><li><a href="/contact">צור קשר</a></li></ul><div class="nav-ecommerce-icons nav-icons-left"><a href="/login" class="login-link nav-login" title="התחברות"><svg class="login-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></a><a href="#cart" class="cart-link nav-cart" id="cart-drawer-toggle" title="עגלת קניות"><svg class="cart-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg><span class="cart-count">0</span></a><div class="nav-search-box">
+    <input type="text" class="nav-search-input" id="nav-search-input" placeholder="חיפוש מוצרים..." autocomplete="off">
+    <button class="nav-search-btn" id="nav-search-btn" title="חיפוש">
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg>
+    </button>
+    <div class="nav-search-results" id="nav-search-results"></div>
+  </div></div><div class="nav-ecommerce-icons nav-icons-right"><button class="nav-search-toggle" id="mobile-search-toggle" title="חיפוש"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg></button></div></div>
+
+    
+
+    
+  </div>
+</nav>
+<script>
+
+// Navbar Mobile Menu Toggle and Contrast Fix
+(function() {
+  // Use 'load' event instead of 'DOMContentLoaded' to ensure we run AFTER all other scripts
+  window.addEventListener('load', function() {
+    
+    // FIX MOBILE BUTTON CONTRAST
+    // Detect navbar background color and apply contrasting color to mobile buttons
+    const navbar = document.querySelector('.navbar, nav, header');
+    if (!navbar) {
+      console.log('[Navbar] Navbar element not found');
+      return;
+    }
+    
+    // DECLARE VARIABLES EARLY to avoid Temporal Dead Zone errors
+    // These are used in multiple places below
+    let mobileToggle = document.getElementById('mobileToggle') ||
+                       document.querySelector('.mobile-toggle') ||
+                       document.querySelector('.hamburger') ||
+                       document.querySelector('.hamburger-menu') ||
+                       document.querySelector('.menu-toggle') ||
+                       document.querySelector('.burger-menu') ||
+                       document.querySelector('[aria-label="Menu"]') ||
+                       document.querySelector('[aria-label="תפריט"]');
+    
+    const phoneBtn = document.querySelector('.phone-header-btn');
+    
+    const computedStyle = window.getComputedStyle(navbar);
+    let bgColor = computedStyle.backgroundColor;
+    
+    console.log('[Navbar] Initial navbar background:', bgColor);
+    
+    // Check if background is transparent or rgba with 0 alpha
+    const isTransparent = bgColor === 'transparent' || 
+                         bgColor === 'rgba(0, 0, 0, 0)' ||
+                         (bgColor.startsWith('rgba') && bgColor.includes(', 0)'));
+    
+    if (isTransparent) {
+      // Check for background-image or gradient
+      const bgImage = computedStyle.backgroundImage;
+      if (bgImage && bgImage !== 'none') {
+        console.log('[Navbar] Navbar has background image/gradient, using dark text');
+        bgColor = 'rgb(240, 240, 240)'; // Assume light background
+      } else {
+        // Transparent navbar - check body background
+        const bodyBg = window.getComputedStyle(document.body).backgroundColor;
+        console.log('[Navbar] Navbar transparent, using body background:', bodyBg);
+        bgColor = bodyBg;
+      }
+    }
+    
+    // Calculate luminance to determine if background is light or dark
+    const rgb = bgColor.match(/\d+/g);
+    if (rgb && rgb.length >= 3) {
+      const r = parseInt(rgb[0]);
+      const g = parseInt(rgb[1]);
+      const b = parseInt(rgb[2]);
+      const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      
+      // Mobile button colors are set by Claude's AI-generated CSS (same as .nav-menu a)
+      // No dynamic color overrides needed - colors come from the generated navbar CSS
+      console.log('[Navbar] Mobile button colors preserved from Claude CSS (luminance:', luminance.toFixed(2) + ')');
+      
+      // FIX ICON SIZES - Ensure SVGs are properly sized and visible
+      // INJECT CRITICAL CSS TO OVERRIDE ANY CONFLICTING RULES
+      const criticalCSS = document.createElement('style');
+      criticalCSS.id = 'zappy-mobile-nav-fix';
+      const htmlLang = document.documentElement.lang || 'en';
+      const htmlDir = document.documentElement.dir || 'ltr';
+      // Check both dir attribute AND lang for RTL detection
+      // dir="rtl" is the most reliable indicator
+      const isRTL = htmlDir === 'rtl' || htmlLang === 'he' || htmlLang === 'ar';
+      
+      criticalCSS.textContent = `
+        /* Hide mobile buttons on desktop, show only on mobile */
+        @media (min-width: 769px) {
+          .mobile-toggle,
+          .phone-header-btn {
+            display: none !important;
+          }
+        }
+        
+        /* Show and position mobile buttons correctly on mobile */
+        @media (max-width: 768px) {
+          .navbar,
+          nav.navbar {
+            min-height: 70px !important;
+          }
+
+          .mobile-toggle,
+          .phone-header-btn {
+            position: absolute !important;
+            top: 0 !important;
+            bottom: 0 !important;
+            margin-top: auto !important;
+            margin-bottom: auto !important;
+            transform: none !important;
+            z-index: 1001 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 50% !important;
+            border: none !important;
+            cursor: pointer !important;
+            padding: 6px !important;
+            background: none !important;
+            color: var(--nav-text, var(--text-dark)) !important;
+            touch-action: manipulation !important;
+            -webkit-tap-highlight-color: transparent !important;
+          }
+
+          html[data-zappy-site-type="ecommerce"] .phone-header-btn,
+          body[data-zappy-site-type="ecommerce"] .phone-header-btn,
+          html[data-zappy-site-type="ecommerce"] header .phone-header-btn,
+          html[data-zappy-site-type="ecommerce"] nav .phone-header-btn {
+            display: none !important;
+            visibility: hidden !important;
+            width: 0 !important;
+            height: 0 !important;
+            min-width: 0 !important;
+            overflow: hidden !important;
+          }
+          
+          /* LTR positioning (default): hamburger LEFT, phone RIGHT */
+          html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .mobile-toggle,
+          html[dir="ltr"] .mobile-toggle {
+            left: 12px !important;
+            right: auto !important;
+          }
+          html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .phone-header-btn,
+          html[dir="ltr"] .phone-header-btn {
+            right: 12px !important;
+            left: auto !important;
+          }
+          
+          /* RTL positioning: hamburger RIGHT, phone LEFT */
+          html[dir="rtl"] .mobile-toggle,
+          html[lang="he"] .mobile-toggle,
+          html[lang="ar"] .mobile-toggle {
+            right: 12px !important;
+            left: auto !important;
+          }
+          html[dir="rtl"] .phone-header-btn,
+          html[lang="he"] .phone-header-btn,
+          html[lang="ar"] .phone-header-btn {
+            left: 12px !important;
+            right: auto !important;
+          }
+          
+          /* CRITICAL: Ensure nav-container has min-height on mobile */
+          /* All children are positioned absolutely/fixed on mobile, so height:auto collapses to 0 */
+          .nav-container {
+            min-height: 70px !important;
+            position: relative !important;
+          }
+          
+          /* Ensure SVG icons are properly sized and inherit color */
+          .mobile-toggle svg,
+          .phone-header-btn svg {
+            width: 24px !important;
+            height: 24px !important;
+            /* Don't force display - let JavaScript control hamburger/close toggle */
+          }
+          
+          /* Reset nav-cta-container on mobile - remove desktop box-shadow/padding */
+          /* that creates a visible ghost box when CTA button is hidden */
+          .nav-cta-container {
+            box-shadow: none !important;
+            padding: 0 !important;
+          }
+          
+          /* Hide nav-cta-container entirely on mobile when there's no lang-switcher */
+          /* (only the CTA button is inside, and it's hidden on mobile) */
+          .nav-cta-container:not(:has(.lang-switcher)) {
+            display: none !important;
+          }
+          
+          /* CRITICAL: Prevent hero image fade gradient from bleeding over headline text */
+          /* The .image-fade-gradient has bottom: -30px (extends below parent) */
+          /* On mobile stacked layout, this overlaps the h1 text below the image */
+          .hero-image-column {
+            overflow: hidden !important;
+          }
+          .image-fade-gradient {
+            bottom: 0 !important;
+          }
+          
+          /* Hide desktop language switcher on mobile - hamburger menu handles it */
+          /* High specificity to override stored CSS */
+          .lang-switcher,
+          .nav-cta-container .lang-switcher,
+          .nav-container .lang-switcher,
+          .navbar .lang-switcher,
+          .navbar .nav-cta-container .lang-switcher {
+            display: none !important;
+          }
+        }
+      `;
+      
+      // Remove existing fix if present and inject new one
+      const existing = document.getElementById('zappy-mobile-nav-fix');
+      if (existing) existing.remove();
+      document.head.appendChild(criticalCSS);
+      
+      console.log('[Navbar] Critical CSS injected for mobile nav positioning');
+      
+      // ONLY apply inline positioning styles on mobile viewport
+      // On desktop, the CSS handles hiding these buttons with display: none
+      // Inline styles were breaking desktop layout by overriding CSS
+      const isMobileViewport = window.innerWidth <= 768;
+      
+      if (mobileToggle) {
+        // Icon sizing applies to all viewports for consistency
+        const hamburgerIcon = mobileToggle.querySelector('.hamburger-icon');
+        const closeIcon = mobileToggle.querySelector('.close-icon');
+        
+        if (hamburgerIcon) {
+          hamburgerIcon.style.setProperty('width', '24px', 'important');
+          hamburgerIcon.style.setProperty('height', '24px', 'important');
+          hamburgerIcon.style.setProperty('display', 'block', 'important'); // Show hamburger by default
+        }
+        if (closeIcon) {
+          closeIcon.style.setProperty('width', '24px', 'important');
+          closeIcon.style.setProperty('height', '24px', 'important');
+          closeIcon.style.setProperty('display', 'none', 'important'); // Hide close icon by default
+        }
+        
+        // ONLY set positioning inline styles on mobile
+        if (isMobileViewport) {
+          mobileToggle.style.setProperty('position', 'absolute', 'important');
+          mobileToggle.style.setProperty('top', '0', 'important');
+          mobileToggle.style.setProperty('bottom', '0', 'important');
+          mobileToggle.style.setProperty('margin-top', 'auto', 'important');
+          mobileToggle.style.setProperty('margin-bottom', 'auto', 'important');
+          mobileToggle.style.setProperty('transform', 'none', 'important');
+          mobileToggle.style.setProperty('z-index', '1001', 'important');
+          
+          // Clear any inline left/right so CSS can take over based on html[dir]
+          mobileToggle.style.removeProperty('left');
+          mobileToggle.style.removeProperty('right');
+          
+          console.log('[Navbar] Mobile toggle positioning applied (mobile viewport)');
+        } else {
+          // On desktop, clear any positioning styles to let CSS handle it
+          mobileToggle.style.removeProperty('position');
+          mobileToggle.style.removeProperty('top');
+          mobileToggle.style.removeProperty('transform');
+          mobileToggle.style.removeProperty('z-index');
+          mobileToggle.style.removeProperty('left');
+          mobileToggle.style.removeProperty('right');
+          console.log('[Navbar] Desktop viewport - cleared mobile toggle inline positioning');
+        }
+      }
+      
+      if (phoneBtn) {
+        // Icon sizing applies to all viewports
+        const phoneIcon = phoneBtn.querySelector('svg');
+        if (phoneIcon) {
+          phoneIcon.style.width = '24px';
+          phoneIcon.style.height = '24px';
+          phoneIcon.setAttribute('width', '24');
+          phoneIcon.setAttribute('height', '24');
+        }
+        
+        // ONLY set positioning inline styles on mobile
+        if (isMobileViewport) {
+          phoneBtn.style.setProperty('position', 'absolute', 'important');
+          phoneBtn.style.setProperty('top', '0', 'important');
+          phoneBtn.style.setProperty('bottom', '0', 'important');
+          phoneBtn.style.setProperty('margin-top', 'auto', 'important');
+          phoneBtn.style.setProperty('margin-bottom', 'auto', 'important');
+          phoneBtn.style.setProperty('transform', 'none', 'important');
+          phoneBtn.style.setProperty('z-index', '1001', 'important');
+          
+          // Clear any inline left/right so CSS can take over based on html[dir]
+          phoneBtn.style.removeProperty('left');
+          phoneBtn.style.removeProperty('right');
+          
+          console.log('[Navbar] Phone button positioning applied (mobile viewport)');
+        } else {
+          // On desktop, clear any positioning styles to let CSS handle it
+          phoneBtn.style.removeProperty('position');
+          phoneBtn.style.removeProperty('top');
+          phoneBtn.style.removeProperty('transform');
+          phoneBtn.style.removeProperty('z-index');
+          phoneBtn.style.removeProperty('left');
+          phoneBtn.style.removeProperty('right');
+          console.log('[Navbar] Desktop viewport - cleared phone button inline positioning');
+        }
+      }
+    } else {
+      console.log('[Navbar] Could not parse background color:', bgColor);
+    }
+    
+    // MOBILE MENU TOGGLE
+    // Re-query in case DOM changed (mobileToggle already declared at top of function)
+    mobileToggle = document.getElementById('mobileToggle') ||
+                   document.querySelector('.mobile-toggle') ||
+                   document.querySelector('.hamburger') ||
+                   document.querySelector('.hamburger-menu') ||
+                   document.querySelector('.menu-toggle') ||
+                   document.querySelector('.burger-menu') ||
+                   document.querySelector('[aria-label="Menu"]') ||
+                   document.querySelector('[aria-label="תפריט"]');
+    
+    // EXPANDED SEARCH: Find nav menu by ID or class
+    const navMenu = document.getElementById('navMenu') ||
+                  document.querySelector('.nav-menu') ||
+                  document.querySelector('.nav-links') ||
+                  document.querySelector('nav ul:not(.submenu)');
+    
+    if (!mobileToggle || !navMenu) {
+      console.log('[Navbar] Mobile toggle or menu not found:', { toggle: !!mobileToggle, menu: !!navMenu });
+      return;
+    }
+    
+    // Ensure navMenu has ID for CSS targeting
+    if (!navMenu.id) {
+      navMenu.id = 'navMenu';
+    }
+    
+    console.log('[Navbar] Initializing mobile menu...');
+    
+    // Remove any existing event listeners by cloning the button
+    const newToggle = mobileToggle.cloneNode(true);
+    mobileToggle.parentNode.replaceChild(newToggle, mobileToggle);
+    
+    // Toggle menu handler (shared by click and touchend)
+    function handleToggle(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const hamburgerIcon = newToggle.querySelector('.hamburger-icon');
+      const closeIcon = newToggle.querySelector('.close-icon');
+      const isActive = navMenu.classList.contains('active');
+      
+      if (isActive) {
+        // Close menu
+        navMenu.classList.remove('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'block', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'none', 'important');
+        document.body.style.overflow = '';
+        console.log('[Navbar] Menu closed');
+      } else {
+        // Open menu
+        navMenu.classList.add('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'none', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'block', 'important');
+        document.body.style.overflow = 'hidden';
+        console.log('[Navbar] Menu opened');
+      }
+    }
+    
+    // Use click for desktop/emulation and touchend as iOS Safari fallback.
+    // Prevent double-fire with a timestamp guard.
+    var lastToggleTime = 0;
+    function guardedToggle(e) {
+      var now = Date.now();
+      if (now - lastToggleTime < 300) return;
+      lastToggleTime = now;
+      handleToggle(e);
+    }
+    
+    newToggle.addEventListener('click', guardedToggle);
+    newToggle.addEventListener('touchend', guardedToggle);
+    
+    // Close menu when clicking nav links (but NOT dropdown toggles)
+    const navLinks = navMenu.querySelectorAll('a');
+    navLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        // Don't close if it's a dropdown child (unless it's a real navigation link)
+        if (this.getAttribute('href') === '#') return;
+        
+        const hamburgerIcon = newToggle.querySelector('.hamburger-icon');
+        const closeIcon = newToggle.querySelector('.close-icon');
+        
+        navMenu.classList.remove('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'block', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'none', 'important');
+        document.body.style.overflow = '';
+        console.log('[Navbar] Menu closed (link clicked)');
+      });
+    });
+    
+    // DROPDOWN MENU TOGGLE (for mobile and touch devices)
+    var dropdownToggles = navMenu.querySelectorAll('.dropdown-toggle');
+    dropdownToggles.forEach(function(toggle) {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var parent = this.closest('.nav-dropdown');
+        if (!parent) return;
+        
+        // Close other open dropdowns at the same level
+        var siblings = parent.parentNode.querySelectorAll('.nav-dropdown.open');
+        siblings.forEach(function(sib) {
+          if (sib !== parent) sib.classList.remove('open');
+        });
+        
+        parent.classList.toggle('open');
+        console.log('[Navbar] Dropdown toggled:', parent.classList.contains('open') ? 'open' : 'closed');
+      });
+    });
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.nav-dropdown')) {
+        var openDropdowns = document.querySelectorAll('.nav-dropdown.open');
+        openDropdowns.forEach(function(dd) { dd.classList.remove('open'); });
+      }
+    });
+    
+    console.log('[Navbar] Dropdown handlers initialized for ' + dropdownToggles.length + ' dropdowns');
+    
+    // Phone button functionality (phoneBtn already declared at top of function)
+    if (phoneBtn) {
+      phoneBtn.addEventListener('click', function() {
+        // Get phone number from placeholder in page or use default
+        const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+        const phoneNumber = phoneLinks.length > 0 
+          ? phoneLinks[0].getAttribute('href').replace('tel:', '')
+          : '[business_phone]';
+        
+        window.location.href = 'tel:' + phoneNumber;
+        console.log('[Navbar] Phone button clicked');
+      });
+    }
+    
+    console.log('[Navbar] Mobile menu initialized successfully');
+    
+    // WhatsApp button visibility is now controlled via CSS (siteSettings).
+    // No JS-based desktop hiding — the button is visible on both mobile and desktop by default.
+  });
+})();
+
+</script>
+  
+  <main id="main">
+    <section class="style-guide-hero-section" data-layout-spec="מדריך סגנון-hero" dir="rtl" data-hero-type="fullscreen-scrim">
+  <!-- Background Image Layer -->
+  <div class="sgh-bg-layer">
+    <img loading="eager" fetchpriority="high" data-hero-bg="true" data-placeholder="style-guide-hero-image-1" data-context="High-fashion editorial photography for MAYO DE BAIN luxury headscarf boutique: a model wearing a beautifully draped silk headscarf in warm ivory and sand tones, styled with modern elegance. The fabric flows softly with gentle movement. The overall mood is campaign-quality — feminine, refined, and luxurious. Warm beige and cream background tones, soft natural lighting, minimal composition. Shot in a clean studio or architectural interior setting. Full-bleed vertical format." width="1400" height="900" src="/assets/site-style-guide-hero-image-1.webp" alt="מדריך סגנון מייו דה בן — מטפחות ואקססוריז יוקרתיים" class="sgh-bg-img">
+  </div>
+
+  <!-- Scrim Overlay -->
+  <div class="sgh-scrim" aria-hidden="true"></div>
+
+  <!-- Decorative fabric wave SVG -->
+  <svg class="sgh-deco-wave" data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 400 600" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M400,0 Q320,80 360,200 Q400,320 340,440 Q280,560 360,600 L400,600 Z" fill="#C9A882" opacity="0.10"></path>
+    <path d="M400,60 Q350,160 380,280 Q410,400 360,500 Q310,580 380,620 L400,600 Z" fill="#C9A882" opacity="0.07"></path>
+  </svg>
+
+  <!-- Text Overlay Group -->
+  <div class="sgh-overlay-group">
+    <div class="sgh-content">
+      <span class="sgh-eyebrow">MAYO DE BAIN</span>
+      <h1 class="sgh-headline">אמנות<br>הסגנון</h1>
+      <h3 class="sgh-subtitle">דרכים מרוכזות לענוד מטפחות ואקססוריז<br>עם אלגנטיות מודרנית ונשיות עכשווית</h3>
+      <a href="/contact" class="sgh-cta btn-primary">לייעוץ סגנון אישי</a>
+    </div>
+  </div>
+
+  <!-- Bottom Divider: cream fade to next section -->
+  <div class="sgh-divider-wrapper" aria-hidden="true">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1400 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,70 L0,28 Q175,10 350,22 T700,14 Q875,6 1050,20 T1400,12 L1400,70 Z" fill="#F0EAE2"></path>
+    </svg>
+  </div>
+</section>
+
+<section class="style-guide-benefits-section" data-layout-spec="מדריך סגנון-benefits" dir="rtl">
+
+  <!-- Decorative dot grid -->
+  <svg class="sgb-dot-grid" aria-hidden="true" data-no-icon-edit="true" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+    <pattern id="sgb-dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#C9A882" opacity="0.5"></circle>
+    </pattern>
+    <rect width="300" height="300" fill="url(#sgb-dots)"></rect>
+  </svg>
+
+  <div class="sgb-container">
+
+    <!-- Section header -->
+    <div class="sgb-header">
+      <p class="sgb-eyebrow">MAYO DE BAIN — מדריך סגנון</p>
+      <h2 class="sgb-title">ארבעה עקרונות לסגנון מושלם</h2>
+      <div class="sgb-title-line"></div>
+    </div>
+
+    <!-- Main editorial grid -->
+    <div class="sgb-editorial-grid">
+
+      <!-- Row 1: Two text panels -->
+      <div class="sgb-row sgb-row-top">
+
+        <article class="sgb-panel sgb-panel-1">
+          <span class="sgb-panel-number">01</span>
+          <h3 class="sgb-panel-heading">איזון נפחים עם קווים נקיים</h3>
+          <div class="sgb-panel-divider"></div>
+          <p class="sgb-panel-text">שלבי פריטים בעלי נפח עם סילואטים נקיים וצמודים. מטפחת מרובעת עשירה יכולה לשמש עוגן לאנסמבל מינימליסטי — הנפח מלמעלה, הנקיון מלמטה.</p>
+        </article>
+
+        <article class="sgb-panel sgb-panel-2">
+          <span class="sgb-panel-number">02</span>
+          <h3 class="sgb-panel-heading">גוונים ניטרליים כשפת יוקרה</h3>
+          <div class="sgb-panel-divider"></div>
+          <p class="sgb-panel-text">בז׳, שמנת, טאופ וניוד הם שפת הלוקס הבינלאומית. בנו את הלוק סביב גוונים קרובים — הניואנסים שביניהם הם מה שמרומם את הסגנון מיפה לבלתי נשכח.</p>
+        </article>
+
+      </div>
+
+      <!-- Image tile — positioned between rows on the END side -->
+      <div class="sgb-image-tile-wrapper">
+        <figure class="sgb-image-tile">
+          <img loading="lazy" decoding="async" data-placeholder="style-guide-benefits-image-1" data-context="Editorial fashion photography for MAYO DE BAIN luxury headscarf boutique. A woman wearing an elegantly draped headscarf in warm ivory and beige tones, photographed in a minimalist studio setting with soft natural light. The image has a fashion-forward editorial quality reminiscent of Vogue or Dior campaigns — clean background, feminine and refined mood, soft shadows, and a focus on the drape and texture of the fabric accessory." width="420" height="560" src="/assets/site-style-guide-benefits-image-1.webp" alt="דוגמנית עם מטפחת מעוצבת של MAYO DE BAIN בסגנון אדיטוריאל יוקרתי">
+          <figcaption class="sgb-image-caption">MAYO DE BAIN — Editorial</figcaption>
+        </figure>
+      </div>
+
+      <!-- Row 2: Two text panels -->
+      <div class="sgb-row sgb-row-bottom">
+
+        <article class="sgb-panel sgb-panel-3">
+          <span class="sgb-panel-number">03</span>
+          <h3 class="sgb-panel-heading">אקססוריז אחד — אפקט שלם</h3>
+          <div class="sgb-panel-divider"></div>
+          <p class="sgb-panel-text">לוק יומיומי הופך לאמירת סגנון באמצעות פריט בולט אחד. מטפחת לונג ב-drape מחושב, עגיל גדול, או צעיף מקופל — בחרו אחד ותנו לו לדבר.</p>
+        </article>
+
+        <article class="sgb-panel sgb-panel-4">
+          <span class="sgb-panel-number">04</span>
+          <h3 class="sgb-panel-heading">מרקם ונפילה כבסיס הלוק</h3>
+          <div class="sgb-panel-divider"></div>
+          <p class="sgb-panel-text">בנו לוקים מלוטשים סביב מרקם ונפילת הבד. שיפון, ג׳רזי, סאטן — לכל בד שפת גוף משלו. בחרו את המרקם קודם, ורק אחריו הוסיפו צבע ופרטים.</p>
+        </article>
+
+      </div>
+
+    </div>
+    <!-- end editorial grid -->
+
+  </div>
+  <!-- end container -->
+
+  <!-- Bottom diagonal divider -->
+  <div class="sgb-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,90 L0,28 L1440,0 L1440,90 Z" fill="#FAF8F5"></path>
+    </svg>
+  </div>
+
+</section>
+
+<section class="style-guide-lookbook-section" data-layout-spec="מדריך סגנון-lookbook" dir="rtl">
+
+  <!-- Decorative dot grid -->
+  <svg class="lookbook-dot-grid" aria-hidden="true" data-no-icon-edit="true" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+    <pattern id="lookbook-dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="var(--accent)" opacity="0.18"></circle>
+    </pattern>
+    <rect width="300" height="300" fill="url(#lookbook-dots)"></rect>
+  </svg>
+
+  <div class="lookbook-container">
+
+    <!-- Section Header -->
+    <header class="lookbook-header">
+      <p class="lookbook-eyebrow">MAYO DE BAIN</p>
+      <h2 class="lookbook-title">מדריך הסגנון</h2>
+      <p class="lookbook-subtitle">חמישה רגעי אופנה שמגדירים את האישה המודרנית</p>
+      <div class="lookbook-rule"></div>
+    </header>
+
+    <nav class="zappy-catalog-menu rtl" id="zappy-catalog-menu" dir="rtl" style="display:none">
+      <div class="catalog-menu-container">
+        <a href="/products" class="catalog-menu-item catalog-menu-all">כל המוצרים</a>
+        <div class="catalog-menu-categories" id="zappy-category-links">
+          <!-- Categories will be loaded dynamically -->
+        </div>
+      </div>
+    </nav>
+  
+
+    <!-- Hero Image (full width) -->
+    <article class="lookbook-hero-item">
+      <figure class="lookbook-hero-figure">
+        <img loading="lazy" decoding="async" data-placeholder="style-guide-lookbook-image-1" data-context="Editorial fashion campaign photo for MAYO DE BAIN luxury headscarf boutique. A sophisticated woman wearing an elegant draped headscarf in warm ivory and gold tones, styled in a full editorial pose against a clean warm beige studio backdrop. High-fashion Vogue-style photography, soft natural light, feminine and luxurious mood, full body shot showing flowing fabric details." width="1200" height="700" src="/assets/site-style-guide-lookbook-image-1.webp" alt="מראה יומיומי מלוטש – קולקציית MAYO DE BAIN">
+        <div class="lookbook-hero-caption">
+          <h3 class="lookbook-look-title">אלגנטיות יומיומית</h3>
+          <p class="lookbook-look-caption">מטפחת משי מדרפה בגוון שנהב — לכל רגע שמגיע לו נוכחות</p>
+        </div>
+      </figure>
+    </article>
+
+    <!-- Four Supporting Looks Grid -->
+    <div class="lookbook-grid">
+
+      <article class="lookbook-grid-item">
+        <figure class="lookbook-grid-figure">
+          <img loading="lazy" decoding="async" data-placeholder="style-guide-lookbook-image-2" data-context="Luxury fashion editorial photo for MAYO DE BAIN. A woman wearing an occasion-wear styled headscarf in deep champagne and blush tones, dressed for a formal event or celebration. Elegant pose, soft studio lighting, feminine luxury boutique aesthetic, three-quarter portrait shot, warm cream background." width="600" height="780" src="/assets/site-style-guide-lookbook-image-2.webp" alt="אלגנטיות לאירוע – MAYO DE BAIN">
+          <figcaption class="lookbook-figcaption">
+            <h3 class="lookbook-look-title">אלגנטיות לאירוע</h3>
+            <p class="lookbook-look-caption">עוטפת ברגע, נזכרת לנצח</p>
+          </figcaption>
+        </figure>
+      </article>
+
+      <article class="lookbook-grid-item">
+        <figure class="lookbook-grid-figure">
+          <img loading="lazy" decoding="async" data-placeholder="style-guide-lookbook-image-3" data-context="Minimalist monochrome fashion editorial for MAYO DE BAIN luxury headscarf brand. A woman styled in a single tonal palette — all soft taupe or warm white — wearing a precisely tied headscarf. Clean studio background, architectural composition, high fashion minimal aesthetic, portrait orientation, quiet luxury mood." width="600" height="780" src="/assets/site-style-guide-lookbook-image-3.webp" alt="מינימליזם מונוכרומטי – MAYO DE BAIN">
+          <figcaption class="lookbook-figcaption">
+            <h3 class="lookbook-look-title">מינימליזם מונוכרומטי</h3>
+            <p class="lookbook-look-caption">גוון אחד, אינסוף עומק</p>
+          </figcaption>
+        </figure>
+      </article>
+
+      <article class="lookbook-grid-item">
+        <figure class="lookbook-grid-figure">
+          <img loading="lazy" decoding="async" data-placeholder="style-guide-lookbook-image-4" data-context="Soft glamour fashion editorial for MAYO DE BAIN. A woman wearing a voluminous draped headscarf in warm rose gold and blush, styled with soft glam makeup and delicate jewelry. Dreamy soft-focus lighting, feminine and romantic mood, luxury boutique aesthetic, portrait orientation, warm golden hour tones." width="600" height="780" src="/assets/site-style-guide-lookbook-image-4.webp" alt="גלאמור עדין – MAYO DE BAIN">
+          <figcaption class="lookbook-figcaption">
+            <h3 class="lookbook-look-title">גלאמור עדין</h3>
+            <p class="lookbook-look-caption">רכות שמדברת בקול</p>
+          </figcaption>
+        </figure>
+      </article>
+
+      <article class="lookbook-grid-item">
+        <figure class="lookbook-grid-figure">
+          <img loading="lazy" decoding="async" data-placeholder="style-guide-lookbook-image-5" data-context="Accessories-focused fashion editorial for MAYO DE BAIN luxury headscarf boutique. Close-up styled shot featuring premium headscarf accessories — decorative pins, silk scrunchies, elegant brooches arranged alongside a folded headscarf in warm caramel tones. Flat lay or styled product editorial, warm beige marble surface, luxury fashion still life, high-end boutique aesthetic." width="600" height="780" src="/assets/site-style-guide-lookbook-image-5.webp" alt="אקססוריז מחמיאים – MAYO DE BAIN">
+          <figcaption class="lookbook-figcaption">
+            <h3 class="lookbook-look-title">פרטים שמשלימים</h3>
+            <p class="lookbook-look-caption">האקססוריז הנכון הוא הכל</p>
+          </figcaption>
+        </figure>
+      </article>
+
+    </div>
+    <!-- End Grid -->
+
+    <!-- CTA -->
+    <div class="lookbook-cta-wrap">
+      <a href="/collections" class="lookbook-cta-btn">גלי את הקולקציה</a>
+    </div>
+
+  </div>
+  <!-- End Container -->
+
+  <!-- Bottom Divider: warm mauve-to-cream gradient band -->
+  <div class="lookbook-bottom-divider" aria-hidden="true"></div>
+
+</section>
+
+<section class="style-guide-faq-section" data-layout-spec="מדריך סגנון-faq" dir="rtl">
+  <!-- Decorative dot grid -->
+  <div class="faq-dot-grid" aria-hidden="true"></div>
+
+  <div class="faq-container">
+    <!-- Section Header -->
+    <div class="faq-header">
+      <small class="faq-eyebrow">מדריך סגנון</small>
+      <h2 class="faq-title">שאלות נפוצות</h2>
+      <p class="faq-subtitle">כל מה שרצית לדעת על בחירת מטפחת, שילוב צבעים ובניית לוק מושלם</p>
+      <div class="faq-title-line" aria-hidden="true"></div>
+    </div>
+
+    <!-- FAQ Items -->
+    <div class="faq-list">
+
+      <article class="faq-item">
+        <div class="faq-item-inner">
+          <h3 class="faq-question">כיצד אוכל לסגור מטפחת בדרכים שונות לאותה הזדמנות?</h3>
+          <p class="faq-answer">המטפחות של MAYO DE BAIN מעוצבות עם מידות ומרקמים שמאפשרים קשירה גמישה — מהסגנון הצמוד והמסודר למראה יומיומי, ועד לקשירה נפחית ודרמטית לאירוע. אנו ממליצות להתחיל עם בסיס פשוט ולשחק עם השאריות לאפקט שכבות.</p>
+        </div>
+        <div class="faq-separator" aria-hidden="true"></div>
+      </article>
+
+      <article class="faq-item">
+        <div class="faq-item-inner">
+          <h3 class="faq-question">איזה מטפחת מתאימה לאירועים רשמיים לעומת יומיום?</h3>
+          <p class="faq-answer">לאירועים רשמיים אנו ממליצות על בדי שיפון, ג'ורז'ט ומשי — הם מחזיקים צורה ומשדרים אלגנטיות. לשימוש יומיומי, ג'רסי ויסקוזה מציעים נוחות ועמידות לאורך יום שלם מבלי להתפשר על מראה מלוטש.</p>
+        </div>
+        <div class="faq-separator" aria-hidden="true"></div>
+      </article>
+
+      <article class="faq-item">
+        <div class="faq-item-inner">
+          <h3 class="faq-question">כיצד לשלב צבעים נכון עם הארון הקיים שלי?</h3>
+          <p class="faq-answer">הכלל הפשוט ביותר: בחרי גוון אחד מהבגד שלך והתאימי אליו מטפחת. גווני ניוד, בז' ושמנת — הלב של הקולקציה שלנו — מתחברים לכמעט כל פלטת צבעים. לתוספת עניין, נסי ניגוד עדין בין טון חם לטון קריר.</p>
+        </div>
+        <div class="faq-separator" aria-hidden="true"></div>
+      </article>
+
+      <article class="faq-item">
+        <div class="faq-item-inner">
+          <h3 class="faq-question">מה ההרגשה של הבדים ואיך לבחור את הנכון לעונה?</h3>
+          <p class="faq-answer">בקיץ מומלץ לבחור ויסקוזה ושיפון קל שמאפשרים נשימה ויוצרים תנועה רכה. בחורף, ג'רסי עבה יותר ומשחרר חום גוף בצורה נעימה. כל בד בקולקציית MAYO DE BAIN עבר בחירה קפדנית לפי מרקם, נפילה ותחושה על העור.</p>
+        </div>
+        <div class="faq-separator" aria-hidden="true"></div>
+      </article>
+
+      <article class="faq-item">
+        <div class="faq-item-inner">
+          <h3 class="faq-question">כיצד לשמור על המטפחת לאורך זמן?</h3>
+          <p class="faq-answer">רוב המטפחות שלנו מומלץ לכבס ביד במים קרים עם סבון עדין, ולייבש שטוח על משטח נקי. יש להימנע מסחיטה חזקה ומחשיפה ישירה לשמש. אחסון מקופל בעדינות — לא תלוי — ישמור על הצורה לאורך שנים.</p>
+        </div>
+        <div class="faq-separator" aria-hidden="true"></div>
+      </article>
+
+      <article class="faq-item">
+        <div class="faq-item-inner">
+          <h3 class="faq-question">כיצד לבנות לוק שלם ומגובש עם אקססוריז?</h3>
+          <p class="faq-answer">הסוד הוא בריסון — בחרי אלמנט אחד בולט: מטפחת עשירה עם תכשיט עדין, או מטפחת נייטרלית עם עגיל דרמטי. תיק עור בגוון קרוב ונעליים פשוטות ישלימו את הלוק. פחות זה יותר כשכל פריט נבחר בכוונה.</p>
+        </div>
+        <div class="faq-separator faq-separator--last" aria-hidden="true"></div>
+      </article>
+
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="faq-cta">
+      <p class="faq-cta-text">לא מצאת את התשובה שחיפשת?</p>
+      <a href="/contact" class="faq-cta-btn">דברי איתנו</a>
+    </div>
+  </div>
+
+  <!-- Bottom dark fade divider -->
+  <div class="faq-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,80 L0,32 Q150,48 300,28 T600,36 Q750,44 900,24 T1200,38 L1200,80 Z" fill="#2C2420"></path>
+    </svg>
+  </div>
+</section>
+
+<section class="style-guide-cta-section" data-layout-spec="מדריך סגנון-cta" dir="rtl">
+  <!-- Decorative corner ornament -->
+  <svg class="style-guide-cta-section__corner-ornament" data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" stroke="#C9A882" stroke-width="0.8" opacity="0.18">
+      <path d="M120,120 Q90,105 75,90 Q60,75 55,50"></path>
+      <path d="M120,120 Q100,95 88,78 Q76,61 72,40"></path>
+      <circle cx="110" cy="110" r="3" fill="#C9A882"></circle>
+      <circle cx="95" cy="98" r="2" fill="#C9A882"></circle>
+      <path d="M78,115 Q82,108 88,112 Q92,116 86,120"></path>
+      <path d="M100,88 Q106,82 112,86"></path>
+      <line x1="60" y1="120" x2="120" y2="60"></line>
+      <line x1="80" y1="120" x2="120" y2="80"></line>
+    </g>
+  </svg>
+
+  <!-- Subtle dot grid decoration -->
+  <svg class="style-guide-cta-section__dot-grid" data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <pattern id="cta-dot-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="1.2" fill="#C9A882" opacity="0.5"></circle>
+    </pattern>
+    <rect width="200" height="200" fill="url(#cta-dot-pattern)"></rect>
+  </svg>
+
+  <div class="style-guide-cta-section__inner">
+    <!-- Gold highlight line -->
+    <div class="style-guide-cta-section__gold-line" aria-hidden="true"></div>
+
+    <div class="style-guide-cta-section__content">
+      <h2 class="style-guide-cta-section__heading">מחפשות את הסגנון שמדבר עליכן?</h2>
+      <p class="style-guide-cta-section__body">קבלי הכוונה אישית ומדויקת מתוך עולם MAYO DE BAIN — אנחנו כאן ללוות אתכן בבחירת הסגנון, הצבעים והאביזרים שיבטאו בדיוק את מי שאתן.</p>
+      <a href="/contact" class="style-guide-cta-section__btn">צרי קשר עם הסטודיו</a>
+    </div>
+  </div>
+</section>
+  </main>
+  
+  <footer class="site-footer" dir="rtl" aria-label="כותרת תחתונה של האתר">
+  <div class="footer-inner">
+    <div class="footer-top">
+
+      <!-- Column 1: Company Info -->
+      <div class="footer-col footer-brand">
+        <a href="/" class="footer-logo-link">
+          <img src="/assets/mayo-de-bain-fashion-e-commerce-logo.webp" alt="MAYO DE BAIN" class="logo">
+        </a>
+        <p class="footer-tagline">אופנה שמספרת סיפור.<br>סגנון שמתחיל בך.</p>
+        <div class="footer-badges">
+          <span class="badge"><i class="fas fa-truck"></i> משלוח חינם מעל 299₪</span>
+          <span class="badge"><i class="fas fa-headset"></i> תמיכה 24/7</span>
+        </div>
+      </div>
+
+      <!-- Column 2: Quick Links -->
+      <div class="footer-col footer-links">
+        <h3 class="footer-heading">ניווט מהיר</h3>
+        <ul class="footer-nav">
+          <li><a href="/">בית</a></li>
+          <li><a href="/brand-story">סיפור המותג</a></li>
+          <li><a href="/style-guide">מדריך סגנון</a></li>
+          <li><a href="/community">קהילה</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Contact -->
+      <div class="footer-col footer-contact-col">
+        <h3 class="footer-heading">צור קשר</h3>
+        <ul class="footer-contact">
+          <li>
+            <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+            <span class="contact-text"><a href="mailto:[business_email]">[business_email]</a></span>
+          </li>
+          <li>
+            <span class="contact-icon"><i class="fas fa-phone"></i></span>
+            <span class="contact-text"><a href="tel:[business_phone]">[business_phone]</a></span>
+          </li>
+          <li><a href="/"><span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span>
+            <span class="contact-text">[business_address]</span></a></li>
+        </ul>
+        <div class="footer-hours">
+          <h4 class="hours-heading">שעות פעילות</h4>
+          <p class="hours-row"><span>ראשון – חמישי</span><span>09:00 – 19:00</span></p>
+          <p class="hours-row"><span>שישי</span><span>09:00 – 14:00</span></p>
+          <p class="hours-row"><span>שבת</span><span>סגור</span></p>
+        </div>
+      </div>
+
+      <!-- Column 4: Social -->
+      <div class="footer-col footer-social-col">
+        <h3 class="footer-heading">עקבו אחרינו</h3>
+        <p class="social-sub">הצטרפו לקהילת MAYO DE BAIN ברשתות החברתיות</p>
+        <div class="social-icons">
+          
+          
+          
+        </div>
+        <div class="newsletter-block">
+          <p class="newsletter-label">הירשמו לניוזלטר</p>
+          <form class="newsletter-form" onsubmit="return false;" aria-label="טופס הרשמה לניוזלטר">
+            <input type="email" placeholder="כתובת אימייל" aria-label="כתובת אימייל">
+            <button type="submit" aria-label="הרשמה">הרשמה</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-divider"></div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 MAYO DE BAIN. כל הזכויות שמורות.</p>
+      <div class="footer-legal">
+        <a href="/privacy">מדיניות פרטיות</a>
+        <span class="legal-sep">|</span>
+        <a href="/terms">תנאי שימוש</a><span class="separator">|</span>
+            <a href="/return-policy" aria-label="מדיניות החזרות">
+              מדיניות החזרות
+            </a>
+        <span class="legal-sep">|</span>
+        <a href="/accessibility">נגישות</a>
+        <span class="legal-sep">|</span>
+        <a href="https://zappy5.com" target="_blank" class="zappy-attribution">נוצר באמצעות Zappy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+  
+  <a href="https://wa.me/[whatsapp_handle]" class="whatsapp-float" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <div data-integration="accessibility:toolbar"></div>
+
+    <script src="/script.js"></script>
+
+    <script id="zappy-mobile-submenu-script">
+    (function() {
+      function initMobileSubmenuToggles() {
+        if (window.innerWidth > 768) {
+          document.querySelectorAll('.mobile-submenu-toggle').forEach(function(btn) { btn.remove(); });
+          document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) { menu.classList.remove('mobile-expanded'); });
+          return;
+        }
+        var items = document.querySelectorAll('.nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu)');
+        items.forEach(function(li) {
+          if (li.querySelector('.mobile-submenu-toggle')) return;
+          var submenu = li.querySelector('.sub-menu');
+          var parentLink = li.querySelector(':scope > a');
+          if (!submenu || !parentLink) return;
+          var toggleBtn = document.createElement('button');
+          toggleBtn.className = 'mobile-submenu-toggle';
+          toggleBtn.setAttribute('aria-label', 'Toggle submenu');
+          toggleBtn.setAttribute('type', 'button');
+          parentLink.insertAdjacentElement('afterend', toggleBtn);
+          toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) {
+              if (menu !== submenu) { menu.classList.remove('mobile-expanded'); var t = menu.parentElement.querySelector('.mobile-submenu-toggle'); if(t) t.classList.remove('expanded'); }
+            });
+            submenu.classList.toggle('mobile-expanded');
+            toggleBtn.classList.toggle('expanded');
+          });
+        });
+      }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileSubmenuToggles); }
+      else { initMobileSubmenuToggles(); }
+      var resizeTimer; window.addEventListener('resize', function() { clearTimeout(resizeTimer); resizeTimer = setTimeout(initMobileSubmenuToggles, 250); });
+      // Re-initialize when mobile menu becomes visible (MutationObserver)
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes') {
+            var target = mutation.target;
+            if (target.classList && (target.classList.contains('active') || target.classList.contains('open'))) {
+              setTimeout(initMobileSubmenuToggles, 100);
+            }
+          }
+        });
+      });
+      setTimeout(function() {
+        document.querySelectorAll('.mobile-menu, .nav-menu, #navMenu, nav').forEach(function(menu) {
+          observer.observe(menu, { attributes: true, attributeFilter: ['class', 'style'] });
+        });
+      }, 500);
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+# MAYO DE BAIN — Generative Engine Optimization Map
+
+> FIX is a premium international boutique brand specializing in headscarves and accessories, inspired by the aesthetic of Daniela Sharvit. The brand exudes modern luxury with a clean, feminine, and elegant identity — think Vogue, Zara, and Dior-level fashion branding. The website experience is designed to feel like entering a high-end international fashion house, with soft beige and cream tones, editorial-style photography, and a mobile-first approach. Every design decision reinforces a boutique fashion brand identity that is Premium, Elegant, Clean, Feminine, and Modern Luxury.
+
+---
+
+## Pages
+
+### בית
+https://example.com
+MAYO DE BAIN היא בוטיק אופנה בינלאומי יוקרתי המתמחה בצעיפים ואביזרים אלגנטיים. חווי אופנה נשית, נקייה ומודרנית שמרגישה כמו בית אופנה עולמי. קני עכשיו.
+
+### סיפור המותג
+https://example.com/brand-story
+סיפור המותג MAYO DE BAIN נולד מתוך חזון של דניאלה שרויט — יופי נשי, אלגנטיות מודרנית ומותרות נקייה. גלי את הסיפור שמאחורי כל צעיף ואביזר יוקרתי שאנו יוצרים.
+
+### מדריך סגנון
+https://example.com/style-guide
+מדריך הסגנון של MAYO DE BAIN מגלה לך איך לשלב צעיפים ואביזרים פרימיום לסטיילינג מושלם. השראה אופנתית ברמת Vogue ו-Dior — ישירות אל הארון שלך. גלי עכשיו.
+
+### קהילה
+https://example.com/community
+קהילת MAYO DE BAIN היא מרחב נשי בלעדי לאוהבות אופנה יוקרתית. שתפי, התעוררי והתחברי לנשים שמאמינות בסגנון אלגנטי ומודרני. הצטרפי אלינו היום וחווי חוויה שונה.
+
+### Products
+https://example.com/products
+המוצרים שלנו - MAYO DE BAIN
+
+### Cart
+https://example.com/cart
+עגלת הקניות שלך
+
+### Checkout
+https://example.com/checkout
+תשלום
+
+### Login
+https://example.com/login
+התחברות לקוחות
+
+### Account
+https://example.com/account
+החשבון שלי
+
+### Order Success
+https://example.com/order-success
+תודה על ההזמנה
+
+### Product Detail
+https://example.com/product/:slug
+פרטי המוצר - MAYO DE BAIN
+
+### Category
+https://example.com/category/:slug
+מוצרים - MAYO DE BAIN
+
+## Legal & Policy
+
+### Privacy Policy
+https://example.com/privacy
+Information about how user data is collected, stored, and protected.
+
+### Terms & Conditions
+https://example.com/terms
+Legal terms describing service usage, rights, and policies.
+
+### Accessibility Statement
+https://example.com/accessibility
+Information about WCAG compliance and accessibility features.
+
+---
+
+## Products
+
+_No products are currently configured._
+
+---
+
+# Business Context (for LLM understanding)
+
+## About MAYO DE BAIN
+FIX is a premium international boutique brand specializing in headscarves and accessories, inspired by the aesthetic of Daniela Sharvit. The brand exudes modern luxury with a clean, feminine, and elegant identity — think Vogue, Zara, and Dior-level fashion branding. The website experience is designed to feel like entering a high-end international fashion house, with soft beige and cream tones, editorial-style photography, and a mobile-first approach. Every design decision reinforces a boutique fashion brand identity that is Premium, Elegant, Clean, Feminine, and Modern Luxury.
+
+## Target Audience
+- נשים המחפשות מטפחות ואקססוריז יוקרתיים, לקוחות של מותגי אופנה פרימיום
+- מחפשות אופנה יוקרתית
+- נאמנות למותגי פרימיום
+- משפיעניות אופנה
+
+## Industry
+Fashion E-commerce
+
+---
+
+# Machine-readable feeds
+
+- Sitemap (XML): https://example.com/sitemap.xml
+- Robots: https://example.com/robots.txt
+- Flattened page text (for LLMs): https://example.com/llms-full.txt
+- Products (JSON): https://example.com/products.json
+- Products (Google Merchant RSS): https://example.com/product-feed.xml
