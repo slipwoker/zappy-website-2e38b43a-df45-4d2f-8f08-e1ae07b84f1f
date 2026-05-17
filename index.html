@@ -252,6 +252,245 @@
     <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
     <!-- Mickidum Accessibility Toolbar -->
     <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
+
+<style data-zappy-section-v2-css="true">
+/* V2 Regenerated Section CSS */
+.index-hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  background-color: #F7F0E8;
+  background-image:
+    radial-gradient(ellipse at 60% 0%, rgba(212,175,116,0.13) 0%, transparent 55%),
+    radial-gradient(ellipse at 20% 100%, rgba(201,168,130,0.10) 0%, transparent 50%),
+    linear-gradient(175deg, #F7F2EC 0%, #EDE4D8 60%, #E4D5C2 100%);
+  color: var(--text-dark);
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  direction: rtl;
+}
+
+/* ── Background Image ── */
+.index-hero-section .index-hero-bg-wrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.index-hero-section .index-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+/* ── Decorative Wave ── */
+.index-hero-section .index-hero-wave-deco {
+  position: absolute;
+  inset-inline-end: 0;
+  top: 0;
+  width: 320px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  aria-hidden: true;
+}
+
+/* ── Decorative Dot Grid ── */
+.index-hero-section .index-hero-dot-grid {
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0;
+  width: 220px;
+  height: 220px;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+/* ── Hero Content ── */
+.index-hero-section .index-hero-content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 110px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  pointer-events: none;
+}
+
+.index-hero-section .index-hero-content > * {
+  pointer-events: auto;
+}
+
+/* Brand Tag */
+.index-hero-section .index-hero-brand-tag {
+  font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-block-end: 18px;
+  opacity: 0.9;
+}
+
+/* H1 Headline */
+.index-hero-section .index-hero-headline {font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+  font-size: clamp(3rem, 10vw, 5.5rem);
+  font-weight: 300;
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--text-dark);
+  margin: 0 0 6px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;}
+
+.index-hero-section .index-hero-headline-line2 {
+  display: block;
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+}
+
+/* Subtitle H3 */
+.index-hero-section .index-hero-subtitle {
+  font-family: 'Assistant', 'Heebo', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 14px 0 32px 0;
+  line-height: 1.5;
+}
+
+/* CTA Button */
+.index-hero-section .index-hero-cta {
+  display: inline-block;
+  font-family: 'Assistant', 'Heebo', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text-dark);
+  border: 1.5px solid var(--text-dark);
+  border-radius: 100px;
+  padding: 13px 36px;
+  background: transparent;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.index-hero-section .index-hero-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--text-dark);
+  border-radius: 100px;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+
+.index-hero-section .index-hero-cta:hover {
+  color: var(--text-light);
+  border-color: var(--text-dark);
+}
+
+.index-hero-section .index-hero-cta:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ── Mobile ── */
+@media (max-width: 767px) {
+  .index-hero-section {
+    min-height: 100svh;
+  }
+
+  .index-hero-section .index-hero-content {
+    padding: 100px 20px 24px;
+  }
+
+  .index-hero-section .index-hero-wave-deco {
+    width: 160px;
+    opacity: 0.7;
+  }
+
+  .index-hero-section .index-hero-dot-grid {
+    width: 140px;
+    height: 140px;
+  }
+
+  .index-hero-section .index-hero-headline {
+    font-size: clamp(2.8rem, 14vw, 4rem);
+  }
+
+  .index-hero-section .index-hero-subtitle {
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    margin: 10px 0 24px 0;
+  }
+
+  .index-hero-section .index-hero-cta {
+    padding: 12px 30px;
+    font-size: 0.68rem;
+  }
+}
+
+/* ── Desktop ── */
+@media (min-width: 768px) {
+  .index-hero-section {
+    min-height: 100vh;
+  }
+
+  .index-hero-section .index-hero-content {
+    padding-block-start: 120px;
+    padding-block-end: 48px;
+  }
+
+  .index-hero-section .index-hero-brand-tag {
+    font-size: 0.7rem;
+    margin-block-end: 22px;
+  }
+
+  .index-hero-section .index-hero-subtitle {
+    font-size: 0.72rem;
+    margin: 18px 0 38px 0;
+  }
+
+  .index-hero-section .index-hero-cta {
+    padding: 14px 44px;
+    font-size: 0.75rem;
+  }
+}
+/* ZAPPY_POSTGEN_GUARD_HERO_FONT_CAP:index-hero */
+.hero h1, .hero-section h1, [class*="hero-"] h1, [class~="hero"] h1, .hero .hero-title, .hero-title { font-size: min(var(--display-xl, 6rem), 6rem) !important; line-height: var(--leading-display, 1.05); }
+@media (max-width: 768px) {
+  .hero h1, .hero-section h1, [class*="hero-"] h1, [class~="hero"] h1, .hero .hero-title, .hero-title { font-size: clamp(2rem, 9vw, 3rem) !important; }
+}
+
+/* ZAPPY_POSTGEN_GUARD_HERO_TYPO:בית-hero (index-hero) — stripped 1 jarring hero headline effect(s) */
+
+</style>
     <link rel="stylesheet" href="/styles.css">
 
     <style id="zappy-dropdown-submenu-styles">
@@ -855,39 +1094,34 @@
 </script>
   
   <main id="main">
-    <section data-band-index="0" class="index-hero-section" data-layout-spec="בית-hero" dir="rtl" data-hero-type="fullscreen-scrim">
+    <section class="index-hero-section" data-layout-spec="בית-hero" dir="rtl" data-hero-type="fullscreen-scrim">
   <!-- Background Image -->
-  <div class="index-hero-bg">
-    <img loading="eager" fetchpriority="high" data-hero-bg="true" data-placeholder="index-hero-image-1" width="1440" height="900" src="/assets/site-index-hero-image-1-resize-1778979100569-1q71ec.webp?v=1778979100569" alt="קמפיין קולקציה חדשה – MAYO DE BAIN" class="index-hero-img index-hero-img--desktop">
-    <img loading="eager" fetchpriority="high" data-hero-bg="true" width="600" height="900" src="/assets/site-index-hero-image-1-resize-1778979152098-xexkyj.webp?v=1778979152098" alt="קמפיין קולקציה חדשה – MAYO DE BAIN" class="index-hero-img index-hero-img--mobile">
+  <div class="index-hero-bg-wrapper">
+    <img data-hero-bg="true" data-context="Editorial fashion photography for a luxury Israeli headscarf boutique. A beautiful woman wearing an elegant, flowing silk headscarf in warm champagne and cream tones, centered in a tall portrait frame. She stands confidently with a serene, refined expression. The background is soft warm beige/cream — airy, bright, and minimal. The lower 75% of the frame is filled by the model. Vogue-level fashion photography, clean studio lighting, soft shadows, high-end boutique aesthetic. Vertical portrait orientation, 3:4 aspect ratio." width="900" height="1200" src="/assets/mayo-de-bain-fashion-e-commerce-section-בית-hero-index-hero-image-1.webp" alt="דוגמנית עם מטפחת משי אלגנטית — קולקציית MAYO DE BAIN" class="index-hero-img">
   </div>
 
-  <!-- Scrim Overlay -->
-  <div class="index-hero-scrim" aria-hidden="true"></div>
-
-  <!-- Film Grain Texture -->
-  <div class="index-hero-grain" aria-hidden="true"></div>
-
-  <!-- Decorative Fabric Wave SVG -->
-  <svg class="index-hero-wave-deco" data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 400 600" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-    <path d="M380,0 Q320,80 360,180 Q400,280 340,380 Q280,480 320,580 Q340,600 400,600 L400,0 Z" fill="#C9A882" opacity="0.10"></path>
-    <path d="M400,0 Q350,100 390,200 Q430,300 370,420 Q330,520 380,600 L400,600 L400,0 Z" fill="#C9A882" opacity="0.06"></path>
+  <!-- Decorative: Fabric Wave SVG -->
+  <svg class="index-hero-wave-deco" data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 400 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M400,0 Q320,80 360,200 Q400,320 340,420 Q280,520 360,600 L400,600 Z" fill="#C9A882" opacity="0.10"></path>
+    <path d="M400,60 Q350,140 380,260 Q410,380 360,480 Q310,560 380,600 L400,600 Z" fill="#C9A882" opacity="0.07"></path>
   </svg>
 
-  <!-- Text Overlay Group -->
-  <div class="index-hero-content"></div>
+  <!-- Decorative: Dot Grid -->
+  <svg class="index-hero-dot-grid" data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <pattern id="dotGrid" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#C9A882" opacity="0.5"></circle>
+    </pattern>
+    <rect width="200" height="200" fill="url(#dotGrid)"></rect>
+  </svg>
 
-  <!-- Bottom Champagne Fade Divider -->
-  <div class="index-hero-divider-wrapper" aria-hidden="true">
-    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="heroFadeGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#FAF8F5" stop-opacity="0"></stop>
-          <stop offset="100%" stop-color="#FAF8F5" stop-opacity="1"></stop>
-        </linearGradient>
-      </defs>
-      <rect x="0" y="0" width="1440" height="80" fill="url(#heroFadeGrad)"></rect>
-    </svg>
+  <!-- Hero Content: Top Overlay -->
+  <div class="index-hero-content">
+    <div class="index-hero-brand-tag">Mayo de Bain</div>
+    <h1 class="index-hero-headline">קולקציה
+      <span class="index-hero-headline-line2">חדשה</span>
+    </h1>
+    <h3 class="index-hero-subtitle">מטפחות ואקססוריז — פרמיום</h3>
+    <a href="/shop" class="index-hero-cta">לקנייה עכשיו</a>
   </div>
 </section>
 
